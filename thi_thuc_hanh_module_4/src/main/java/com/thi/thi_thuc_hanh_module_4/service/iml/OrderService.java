@@ -4,6 +4,8 @@ import com.thi.thi_thuc_hanh_module_4.model.Order;
 import com.thi.thi_thuc_hanh_module_4.repository.IOrderRepository;
 import com.thi.thi_thuc_hanh_module_4.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,4 +36,10 @@ public class OrderService implements IOrderService {
     public void save(Order order) {
         orderRepository.save(order);
     }
+
+    @Override
+    public Page<Order> findTopOrders(Pageable pageable) {
+        return orderRepository.findTopOrders(pageable);
+    }
+
 }

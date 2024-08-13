@@ -44,12 +44,12 @@
     <form action="#" th:action="@{/product-manager/update}" method="POST">
         <input type="hidden" name="id" th:value="${order.getId()}">
         <div class="form-control mb-3">
-            <label for="title">Loại sản phẩm : </label>
-            <input type="text" name="code" th:value="${order.product.getProductCatecury().getName()}"/>
+            <label for="title">Loại sản phẩm: </label>
+            <input type="text" name="code" th:value="${order.product.getProductCatecury().getName()}" readonly />
         </div>
         <div class="form-control mb-3">
             <label for="title">sản phẩm : </label>
-            <input class="form-control" type="text" id="title" name="product" th:value="${order.product.getName()}" />
+            <input class="form-control" type="text" id="title" name="product" th:value="${order.product.getName()}" readonly/>
         </div>
         <div class="form-control mb-3">
             <label for="content">Ngày mua (dd/MM/yyyy): </label>
