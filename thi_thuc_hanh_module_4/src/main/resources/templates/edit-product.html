@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous" async></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                const dateInput = document.getElementById('content');
+                const quantityInput = document.getElementById('author');
+                const dateValue = new Date(dateInput.value.split('/').reverse().join('-'));
+                const currentDate = new Date();
+                const quantityValue = parseInt(quantityInput.value);
+
+                if (dateInput.value && (dateValue <= currentDate)) {
+                    alert("Ngày mua phải lớn hơn ngày hiện tại.");
+                    event.preventDefault();
+                    return;
+                }
+
+                if (isNaN(quantityValue) || quantityValue <= 0) {
+                    alert("Số lượng phải là số nguyên dương và không được để trống.");
+                    event.preventDefault();
+                    return;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h3>Edit Blog</h3>
+    <p>
+        <a class="btn btn-primary" th:href="@{/product-manager}">
+            Back to Blog list
+        </a>
+    </p>
+    <form action="#" th:action="@{/product-manager/update}" method="POST">
+        <input type="hidden" name="id" th:value="${order.getId()}">
+        <div class="form-control mb-3">
+            <label for="title">Loại sản phẩm : </label>
+            <input type="text" name="code" th:value="${order.product.getProductCatecury().getName()}"/>
+        </div>
+        <div class="form-control mb-3">
+            <label for="title">sản phẩm : </label>
+            <input class="form-control" type="text" id="title" name="product" th:value="${order.product.getName()}" />
+        </div>
+        <div class="form-control mb-3">
+            <label for="content">Ngày mua (dd/MM/yyyy): </label>
+            <input class="date" type="text" id="content" placeholder="dd/MM/yyyy" name="buy" th:value="${order.getDateBuy()}"/>
+        </div>
+        <div class="form-control mb-3">
+            <label for="author">Số lượng : </label>
+            <input class="form-control" type="number" id="author" name="quanlity" th:value="${order.getQuantity()}" min="1" required />
+        </div>
+        <button type="submit" class="btn btn-success mb-3">Update Blog</button>
+    </form>
+</div>
+</body>
+</html>

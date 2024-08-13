@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Đơn Hàng</title>
+    <th:block th:replace="common::bootstrap"></th:block>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Thông Tin Đơn Hàng</h1>
+
+    <div class="date-search">
+        <form th:action="@{/product-manager/date-search}" method="get">
+            <label for="first">Chọn ngày bắt đầu</label>
+            <input type="date" name="first" id="first">
+            <label for="second">Chọn ngày kết thúc</label>
+            <input type="date" name="second" id="second">
+            <button type="submit" class="btn btn-outline-success">Tra cứu theo ngày</button>
+        </form>
+    </div>
+
+    <form class="row g-3 my-4" method="GET" th:action="@{/product-manager/search}">
+        <div class="col-lg-2 col-md-6">
+            <label for="quantity" class="form-label">Số lượng</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" min="1">
+        </div>
+        <div class="col-lg-2 col-md-6 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Xem danh sách</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Mã sản phẩm</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Giá sản phẩm (VND)</th>
+            <th scope="col">Loại sản phẩm</th>
+            <th scope="col">Ngày mua</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Tổng tiền (VND)</th>
+            <th scope="col">Chỉnh sửa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order, iterStat : ${orderList}">
+            <th scope="row" th:text="${iterStat.count}"></th>
+            <td th:text="${order.product.getId()}"></td>
+            <td th:text="${order.product.getName()}"></td>
+            <td th:text="${order.product.getPrice()}"></td>
+            <td th:text="${order.product.getProductCatecury().getName()}"></td>
+            <td th:text="${order.getDateBuy()}"></td>
+            <td th:text="${order.getQuantity()}"></td>
+            <td th:text="${order.product.getPrice() * order.getQuantity()}"></td>
+            <td><a class="btn btn-warning btn-sm" th:href="@{/product-manager/edit/{id}(id=${order.getId()})}">Chỉnh sửa</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
